@@ -73,7 +73,7 @@ class DiscoveryTests(unittest.TestCase):
             validate_plan(forged)
 
     def test_soft_budget_stops_before_first_measurement(self):
-        clock_values = iter([0.0, 10.0, 10.0])
+        clock_values = iter([0.0, 31.0, 31.0])
         with patch("phirsi.discovery._run_one") as runner:
             stopped = run_discovery(self.plan, approved=True, clock=lambda: next(clock_values))
             runner.assert_not_called()
