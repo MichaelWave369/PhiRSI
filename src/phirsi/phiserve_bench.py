@@ -58,7 +58,8 @@ def _validate_token(token: str | None) -> str | None:
 
 def _config(model: str, port: int, rounds: int, max_tokens: int,
             timeout_seconds: int, seed: int) -> dict[str, Any]:
-    if type(model) is not str or not MODEL_ID.fullmatch(model):
+    if (type(model) is not str or not MODEL_ID.fullmatch(model)
+            or "//" in model or ".." in model):
         raise InvalidExperiment("invalid model alias")
     bounded_int(port, 1, 65535, "port")
     bounded_int(rounds, 1, 3, "rounds")
