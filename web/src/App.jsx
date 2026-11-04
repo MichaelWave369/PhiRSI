@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DiscoveryDesk from "./DiscoveryDesk.jsx";
 import { RUNGS, runBrowserBenchmark, inspectHandoff } from "./lab.js";
 
 const REPO = "https://github.com/MichaelWave369/PhiRSI";
@@ -83,8 +84,8 @@ function Roadmap() {
             >
               <span className="rung-index">{String(item.id).padStart(2, "0")}</span>
               <span className="rung-main"><strong>{item.title}</strong><small>{item.subtitle}</small></span>
-              <span className={"status-pill " + (item.status === "merged" ? "complete" : "planned")}>
-                {item.status === "merged" ? "MERGED" : "PLANNED"}
+              <span className={"status-pill " + (item.status === "planned" ? "planned" : "complete")}>
+                {item.status === "planned" ? "PLANNED" : item.status === "implemented" ? "AVAILABLE" : "MERGED"}
               </span>
               <span className="rung-chevron" aria-hidden="true">›</span>
             </button>
@@ -94,8 +95,8 @@ function Roadmap() {
           <p className="eyebrow">PROJECT MILESTONE / {String(active.id).padStart(2, "0")}</p>
           <div className="detail-num" aria-hidden="true">R{active.id}</div>
           <div className="detail-bottom">
-            <span className={"status-pill " + (active.status === "merged" ? "complete" : "planned")}>
-              {active.status === "merged" ? "IMPLEMENTED ON MAIN" : "RESEARCH PLANNED"}
+            <span className={"status-pill " + (active.status === "planned" ? "planned" : "complete")}>
+              {active.status === "planned" ? "RESEARCH PLANNED" : active.status === "implemented" ? "SOURCE IMPLEMENTATION AVAILABLE" : "IMPLEMENTED ON MAIN"}
             </span>
             <h3>{active.title}</h3>
             <p>{active.detail}</p>
@@ -341,6 +342,7 @@ export default function App() {
             <a href="#roadmap">ROADMAP</a>
             <a href="#experiment">LIVE EXPERIMENT</a>
             <a href="#evidence">EVIDENCE</a>
+            <a href="#discovery">DISCOVERY</a>
           </nav>
           <a className="header-github" href={REPO} target="_blank" rel="noreferrer">
             GITHUB <Arrow />
@@ -363,7 +365,7 @@ export default function App() {
         </section>
         <div className="page-container">
           <div className="status-strip" aria-label="Research status summary">
-            <div><strong>05<span> / 07</span></strong><small>MERGED RESEARCH RUNGS</small></div>
+            <div><strong>06<span> / 07</span></strong><small>AVAILABLE RESEARCH RUNGS</small></div>
             <div><strong>03</strong><small>FIXED BROWSER TEST CASES</small></div>
             <div><strong>00</strong><small>AUTOMATIC DEPLOYMENT GRANTS</small></div>
             <div className="strip-status"><span className="signal-dot"/> EXPERIMENTAL SOFTWARE <small>NOT AN AGI CLAIM</small></div>
@@ -376,6 +378,7 @@ export default function App() {
           <Roadmap />
           <Experiment />
           <EvidenceInspector />
+          <DiscoveryDesk />
           <section className="ecosystem section" id="ecosystem">
             <SectionHeader eyebrow="04 / THE CONNECTED ECOSYSTEM"
               title="Built to collaborate. Never to overreach."

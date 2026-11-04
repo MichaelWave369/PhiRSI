@@ -96,6 +96,19 @@ To run locally:
 
 For scope, expected behavior and post-deployment checks, see [Live Lab contract](docs/LIVE_SITE_R1.md) and [web README](web/README.md).
 
+## Rung 6: bounded iterative discovery and ledger
+
+R6 introduces an **explicitly approved, bounded algorithm-selection loop** with a mandatory negative control, a fixed reviewed candidate shortlist, a development-only selection gate, at-most-once evaluation on distinct seeded inputs and hash-chained research evidence. It is **not** an autonomous AI-writing or self-improving model.
+
+    mkdir -p artifacts
+    python -m phirsi.discovery_cli plan --max-n 5000 --cases 3 --rounds 2 --output artifacts/r6-plan.json
+    # Review/commit the plan before using its evaluation results.
+    python -m phirsi.discovery_cli run --plan artifacts/r6-plan.json --approve-bounded-search --output artifacts/r6-ledger.json
+    python -m phirsi.discovery_cli verify artifacts/r6-ledger.json
+
+The ledger always records no automatic promotion, no model-weight changes and human review. Existing R1–R5 commands remain unchanged. The new [R6 research protocol](docs/R6_PROTOCOL.md) explains the soft budget, non-secret evaluation split, experimental biases and lack of independent timing authentication.
+
+The React Live Lab now includes a **local JSON Discovery Ledger timeline**. It displays the reported observations without uploading them, but cannot independently authenticate the receipt or replay Python correctness. It is not a network-connected research dispatcher.
 ## Φ369 ecosystem roadmap
 
 **Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. R4 implements an opt-in PhiServe benchmark. R5 adds an offline governance handoff and a GET-only local Agentora health/version preflight; active Agentora orchestration and direct PhiOS, CompAware, and PhiMadaPrime integration remain future work.

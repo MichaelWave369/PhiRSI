@@ -74,6 +74,6 @@ test("unknown shape and rogue status never become verified evidence", () => {
 
 test("published roadmap distinguishes implemented and planned", () => {
   assert.deepEqual(RUNGS.map(item => item.status), [
-    "merged", "merged", "merged", "merged", "merged", "planned", "planned"
+    "merged", "merged", "merged", "merged", "merged", "implemented", "planned"
   ]);
 });
