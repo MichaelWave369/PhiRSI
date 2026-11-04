@@ -70,6 +70,7 @@ class PairTests(unittest.TestCase):
         )
         FakeService.seen.clear()
         cls.receipt = run_pair(cls.plan, approved=True, token="local-only-test-token")
+        cls.initial_requests = list(FakeService.seen)
 
     @classmethod
     def tearDownClass(cls):
@@ -78,14 +79,14 @@ class PairTests(unittest.TestCase):
         cls.thread.join(timeout=5)
 
     def test_real_loopback_protocol_and_balanced_requests(self):
-        posts = [line for line in FakeService.seen if line[0] == "POST"]
+        posts = [line for line in self.initial_requests if line[0] == "POST"]
         self.assertEqual(len(posts), 12)
         self.assertEqual([x[2] for x in posts[:6]], [
             "model-a", "model-b", "model-b", "model-a", "model-a", "model-b"
         ])
         self.assertTrue(all(x[1] == "/v1/chat/completions" for x in posts))
         self.assertTrue(all(x[3] == "Bearer local-only-test-token" for x in posts))
-        self.assertEqual(sum(x[0] == "GET" for x in FakeService.seen), 4)
+        self.assertEqual(sum(x[0] == "GET" for x in self.initial_requests), 4)
         self.assertEqual(len(self.receipt["observations"]), 12)
         self.assertEqual(self.receipt["assessment"]["paired_task_count"], 6)
 
