@@ -80,6 +80,22 @@ One **real GET-only integration** is included: check an already-running Agentora
 
 See [R5 handoff protocol](docs/R5_PROTOCOL.md) for schema, scope, test coverage and limitations.
 
+## ΦRSI Live Lab (React research website)
+
+A responsive, public-facing React site is now included under [web/](web/). It features an interactive R1–R7 research roadmap, a **real bounded prime-count comparison running entirely inside your browser**, and a **local-only R5 evidence-handoff shape inspector**. The browser demo is not a Python experiment receipt or model benchmark, and the inspector does not authenticate evidence. The website never runs a model, opens a privileged Agentora/PhiOS connection, or grants merge/deployment authority.
+
+After the separate site workflow passes on main and GitHub Pages is configured for **GitHub Actions** publication, the target is [PhiRSI Live Lab](https://michaelwave369.github.io/PhiRSI/). That address is **not proof of deployment** until GitHub Pages confirms the deployment and a browser test succeeds.
+
+To run locally:
+
+    cd web
+    npm install
+    npm test
+    npm run dev
+    npm run build
+
+For scope, expected behavior and post-deployment checks, see [Live Lab contract](docs/LIVE_SITE_R1.md) and [web README](web/README.md).
+
 ## Φ369 ecosystem roadmap
 
 **Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. R4 implements an opt-in PhiServe benchmark. R5 adds an offline governance handoff and a GET-only local Agentora health/version preflight; active Agentora orchestration and direct PhiOS, CompAware, and PhiMadaPrime integration remain future work.
