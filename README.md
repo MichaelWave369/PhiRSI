@@ -120,6 +120,20 @@ R7 creates bounded, independently **checkable** research packets from **2–6 di
 **Distinct input seeds do not prove independent laboratories.** Neither the Python verifier nor React viewer can authenticate past timings, hardware, experimenter or external provenance. No confidence interval, statistical significance, model intelligence improvement, or authority to promote is claimed. The ZIP retains its original experiment receipts. Review the packet for sensitive metadata before deciding to share it.
 
 See [R7 Protocol](docs/R7_PROTOCOL.md) for a complete two-run example, export format, safe bounds and independent-replication requirements. On the public site, the Open Replication desk reads a summary locally without uploading it or verifying its original source.
+## Rung 8: controlled, real-model local A/B comparisons
+
+R8 adds an explicitly authorized, loopback-only **paired PhiServe model experiment** for two already registered aliases. Across the same three public toy questions it alternates A/B and B/A order, measures request latency and exact-match results, and records answer **hashes rather than generated texts**.
+
+    python -m phirsi.model_pair_cli plan --model-a YOUR_FIRST_ALIAS --model-b YOUR_SECOND_ALIAS --rounds 1 --output artifacts/r8-plan.json
+    python -m phirsi.model_pair_cli run --plan artifacts/r8-plan.json --approve-local-inference --output artifacts/r8-receipt.json
+    python -m phirsi.model_pair_cli verify artifacts/r8-receipt.json
+    python -m phirsi.model_pair_cli summary artifacts/r8-receipt.json --output artifacts/r8-summary.json
+
+Run those commands only on a computer where PhiServe is already serving the selected local models. **GitHub CI uses a fake loopback server; no real local model validation or GPU measurement is claimed.** There are no downloads, automated upgrades, external network calls, raw response texts or bearer credentials in the receipts.
+
+R8 reports descriptive timing and toy-task exact-match numbers but **never declares a general intelligence winner**. It does not attest model weights, independent timing, VRAM, TTFT or statistical significance. React's new Model A/B desk reads the exported summary locally and does not connect to PhiServe or verify historical model execution.
+
+See [R8 Protocol](docs/R8_PROTOCOL.md) for exact limits and real-hardware field steps.
 ## Φ369 ecosystem roadmap
 
 **Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. R4 implements an opt-in PhiServe benchmark. R5 adds an offline governance handoff and a GET-only local Agentora health/version preflight; active Agentora orchestration and direct PhiOS, CompAware, and PhiMadaPrime integration remain future work.
