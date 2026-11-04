@@ -1,0 +1,40 @@
+name: R6 bounded discovery and evidence ledger
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r6:
+    name: R6 registered-candidate search and negative-control replay
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PhiRSI
+        run: python -m pip install -e .
+      - name: Run regression and R6 unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Create bounded R6 plan and execute registered benchmark
+        run: |
+          mkdir -p artifacts
+          python -m phirsi.discovery_cli plan --max-n 2000 --cases 3 --rounds 2 --max-wall-seconds 30 --output artifacts/r6-plan.json
+          python -m phirsi.discovery_cli run --plan artifacts/r6-plan.json --approve-bounded-search --output artifacts/r6-ledger.json
+      - name: Replay R6 evidence with unchanged local source
+        run: |
+          python -m phirsi.discovery_cli verify artifacts/r6-ledger.json
+          python -c "import json; from pathlib import Path; x=json.loads(Path('artifacts/r6-ledger.json').read_text()); assert not x['governance']['automatic_promotion']; assert not x['governance']['model_weight_changes']; assert x['events'][0]['candidate']=='trial'"
+      - name: Publish synthetic evidence, never live local model data
+        uses: actions/upload-artifact@v4
+        with:
+          name: phirsi-r6-synthetic-discovery
+          path: artifacts/
+          if-no-files-found: error
