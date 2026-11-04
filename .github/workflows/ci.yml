@@ -1,0 +1,37 @@
+name: R1 evidence gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r1:
+    name: Python R1 tests and receipt replay
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install research package
+        run: python -m pip install -e .
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Generate bounded real smoke receipt
+        run: |
+          mkdir -p artifacts
+          python -m phirsi run --max-n 3000 --cases 3 --rounds 2 --warmups 0 --output artifacts/r1-smoke.json
+      - name: Replay evidence and inspect its limits
+        run: python -m phirsi verify artifacts/r1-smoke.json
+      - name: Upload evidence artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: phirsi-r1-smoke
+          path: artifacts/r1-smoke.json
+          if-no-files-found: error
