@@ -1,0 +1,44 @@
+name: R5 governed evidence handoff
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r5:
+    name: No-authority handoff, genuine loopback test and regressions
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PhiRSI
+        run: python -m pip install -e .
+      - name: Full existing and R5 unit test suite
+        run: python -m unittest discover -s tests -v
+      - name: R5 handoff CLI advertises only approved commands
+        run: |
+          python -m phirsi.ecosystem_cli --help
+          python -m phirsi.ecosystem_cli prepare --help
+          python -m phirsi.ecosystem_cli verify --help
+          python -m phirsi.ecosystem_cli agentora-doctor --help
+      - name: Export and verify known R1 evidence, no external services
+        run: |
+          mkdir -p artifacts
+          python -m phirsi run --max-n 1000 --cases 2 --rounds 1 --warmups 0 --output artifacts/r1.json
+          python -m phirsi.ecosystem_cli prepare --kind r1 --source artifacts/r1.json --output artifacts/r5-handoff.json
+          python -m phirsi.ecosystem_cli verify --kind r1 --source artifacts/r1.json --handoff artifacts/r5-handoff.json
+          python -c "import json; from pathlib import Path; p=json.loads(Path('artifacts/r5-handoff.json').read_text()); assert p['disposition']=='REVIEW_ONLY' and p['policy']['authorized_actions']==[] and not p['policy']['execution_authorized']"
+      - name: Publish only synthetic CI receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phirsi-r5-offline-handoff
+          path: artifacts/
+          if-no-files-found: error
