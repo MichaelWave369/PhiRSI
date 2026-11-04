@@ -109,6 +109,17 @@ R6 introduces an **explicitly approved, bounded algorithm-selection loop** with 
 The ledger always records no automatic promotion, no model-weight changes and human review. Existing R1–R5 commands remain unchanged. The new [R6 research protocol](docs/R6_PROTOCOL.md) explains the soft budget, non-secret evaluation split, experimental biases and lack of independent timing authentication.
 
 The React Live Lab now includes a **local JSON Discovery Ledger timeline**. It displays the reported observations without uploading them, but cannot independently authenticate the receipt or replay Python correctness. It is not a network-connected research dispatcher.
+## Rung 7: open comparison and reproducible research packets
+
+R7 creates bounded, independently **checkable** research packets from **2–6 distinct-seed R6 ledgers** with the same experiment design. It validates each original R6 receipt, preserves negative and budget-stopped results, checks source comparability, stores original evidence in a safe ZIP, and exports a compact review-only manifest for the React Live Lab.
+
+    python -m phirsi.replication_cli pack --ledger artifacts/ledger-369.json --ledger artifacts/ledger-370.json --output artifacts/r7-packet.zip
+    python -m phirsi.replication_cli verify artifacts/r7-packet.zip
+    python -m phirsi.replication_cli summary artifacts/r7-packet.zip --output artifacts/r7-summary.json
+
+**Distinct input seeds do not prove independent laboratories.** Neither the Python verifier nor React viewer can authenticate past timings, hardware, experimenter or external provenance. No confidence interval, statistical significance, model intelligence improvement, or authority to promote is claimed. The ZIP retains its original experiment receipts. Review the packet for sensitive metadata before deciding to share it.
+
+See [R7 Protocol](docs/R7_PROTOCOL.md) for a complete two-run example, export format, safe bounds and independent-replication requirements. On the public site, the Open Replication desk reads a summary locally without uploading it or verifying its original source.
 ## Φ369 ecosystem roadmap
 
 **Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. R4 implements an opt-in PhiServe benchmark. R5 adds an offline governance handoff and a GET-only local Agentora health/version preflight; active Agentora orchestration and direct PhiOS, CompAware, and PhiMadaPrime integration remain future work.
