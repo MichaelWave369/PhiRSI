@@ -15,6 +15,7 @@ dependencies = []
 [project.scripts]
 phirsi = "phirsi.__main__:main"
 phirsi-phiserve = "phirsi.phiserve_cli:main"
+phirsi-ecosystem = "phirsi.ecosystem_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
