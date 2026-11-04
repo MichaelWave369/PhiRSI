@@ -314,9 +314,9 @@ def verify_field(receipt):
                    "SAMPLER_DID_NOT_STOP"} \
                or value["independently_attested"] is not False \
                or value["same_execution_as_r9"] is not False \
-               or (value["driver_status"]=="PROCESS_MEMORY_DRIVER_SELF_REPORT") !=
-                  (type(value["driver_peak_process_memory_mib"]) is int and
-                   0 <= value["driver_peak_process_memory_mib"] <= 1_000_000) :
+               or ((value["driver_status"]=="PROCESS_MEMORY_DRIVER_SELF_REPORT") !=
+                   (type(value["driver_peak_process_memory_mib"]) is int and
+                    0 <= value["driver_peak_process_memory_mib"] <= 1_000_000)) :
                 raise InvalidExperiment("external field evidence invalid")
         rows=receipt["observations"]
         if not isinstance(rows,list) or len(rows)!=plan["rounds"]*len(CASES)*2:
