@@ -40,9 +40,20 @@ R2 adds a study-plan format, deterministic development/evaluation splits, explic
 
 Possible results: `observational_support`, `not_supported` or `negative_control`. **No result grants deployment authority.** The split is precommitted but not secret; the tool cannot authenticate when a plan was written or independently reproduce historical timing. See [R2 Protocol](docs/R2_PROTOCOL.md).
 
+## Rung 3: bounded AI-code proposal intake
+
+R3 introduces an **inert proposal packet**, an independent host-reference check, and an **explicitly approved Docker-only probe** for one known prime-counting task. The default action never executes the proposed source. CI deliberately mocks Docker rather than running untrusted code.
+
+    python -m phirsi.proposal_cli draft --source examples/sieve_candidate.py --id candidate-sieve-369 --hypothesis "Investigate candidate prime counting" --output r3-proposal.json
+    python -m phirsi.proposal_cli review --proposal r3-proposal.json
+
+The review returns **HELD**. Optional operator-authorized live execution requires a securely configured Docker host and an explicitly pinned, locally installed Python container image; it does not occur automatically. See [R3 protocol and exact trust boundaries](docs/R3_PROTOCOL.md).
+
+No benchmark gain, container-security proof, authenticated authorship, permission elevation, or deployment authority is claimed. The project is still a research harness, not a recursive self-improving AI.
+
 ## Φ369 ecosystem roadmap
 
-**Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. None of those integrations is active or required in R1 or R2.
+**Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. None of those integrations is active or required in R1, R2 or R3.
 
 Research foundations: [Charter](docs/CHARTER.md), [Receipt contract](docs/RECEIPT_V1.md), [Roadmap](docs/ROADMAP.md).
 

@@ -6,13 +6,13 @@ Build a standard-library Python experiment runner with bounded built-in algorith
 
 **Exit gate:** Python CI tests pass, real receipts validate, tampered results fail, and automatic promotion remains disabled.
 
-## R2: Precommitted two-split evaluation (current PR)
+## R2: Precommitted two-split evaluation (merged)
 
 Register bounded hypotheses and acceptance criteria before experiments. Compare development and evaluation splits, reject an identical-algorithm negative control, retain both evidence receipts and replay conclusions. This is a documented split, not a secret or independently isolated holdout. Formal confidence intervals, multiple alternative baselines, authenticated preregistration and independent timing replication remain open research.
 
-## R3: AI proposals in containment
+## R3: Human-authorized candidate-code probes (current PR)
 
-Allow AI-generated candidate patches only in disposable worktrees under externally enforced resource and permission limits. Separate proposal generation from trusted evaluation. No secrets, shell/network privileges by default; never trust candidate-supplied test results.
+Accept untrusted Python source as inert, fingerprinted proposal packets. Only a separate, explicit operator approval invokes a bounded local Docker container with no network, no secrets, read-only mounts and CPU/memory/process/time caps. Match guest-reported outputs against a host-side reference, but treat guest timings and execution provenance as unverified. R3 does not apply arbitrary Git patches or run Docker in CI. Stronger VM isolation and independent execution provenance remain future work.
 
 ## R4: Real local AI workloads
 

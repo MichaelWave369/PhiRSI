@@ -1,0 +1,37 @@
+name: R3 inert proposal intake
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r3:
+    name: R3 no-execution intake and policy tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Run full unit suite (Docker calls are mocked)
+        run: python -m unittest discover -s tests -v
+      - name: Create and review inert source proposal
+        run: |
+          mkdir -p artifacts
+          python -m phirsi.proposal_cli draft --source examples/sieve_candidate.py --id candidate-sieve-369 --hypothesis "Investigate a candidate prime-count implementation" --output artifacts/r3-proposal.json
+          python -m phirsi.proposal_cli review --proposal artifacts/r3-proposal.json > artifacts/r3-review.json
+          python -c "import json; from pathlib import Path; p=json.loads(Path('artifacts/r3-review.json').read_text()); assert p['status']=='HELD' and not p['execution_performed']"
+      - name: Preserve inert proposal and review evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phirsi-r3-review-only
+          path: artifacts/
+          if-no-files-found: error
