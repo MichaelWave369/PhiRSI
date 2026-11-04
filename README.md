@@ -65,9 +65,24 @@ The three public, deterministic toy prompts produce only a **narrow exact-match 
 
 CI uses a fake loopback HTTP server, **not** a real PhiServe process or GGUF weights. For the operating protocol, local bearer-token guidance and exact limitations see [R4 Protocol](docs/R4_PROTOCOL.md).
 
+## Rung 5: Φ Ecosystem Handoff (review-only)
+
+R5 consolidates R1/R2/R3/R4 evidence into a small **zero-authority, source-bound review packet**. It validates the original evidence using the existing rung validators and explicitly forbids auto-execution, mission dispatch, merge, deployment, and writeback.
+
+    python -m phirsi.ecosystem_cli prepare --kind r2 --source artifacts/study.json --output artifacts/review-handoff.json
+    python -m phirsi.ecosystem_cli verify --kind r2 --source artifacts/study.json --handoff artifacts/review-handoff.json
+
+One **real GET-only integration** is included: check an already-running Agentora service at its local address.
+
+    python -m phirsi.ecosystem_cli agentora-doctor --port 8088
+
+**Important:** Agentora mission dispatch, PhiOS ledger ingestion, PhiMadaPrime visualization, and CompAware scientific review are *not wired yet*. They are documented offline review targets, not active integrations. The handoff never includes original source code, raw prompts, completion text, tokens, or credentials. It is not authenticated independent evidence.
+
+See [R5 handoff protocol](docs/R5_PROTOCOL.md) for schema, scope, test coverage and limitations.
+
 ## Φ369 ecosystem roadmap
 
-**Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. A small opt-in PhiServe benchmark is now implemented in R4. Agentora, PhiOS, CompAware, and PhiMadaPrime integrations remain future work.
+**Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. R4 implements an opt-in PhiServe benchmark. R5 adds an offline governance handoff and a GET-only local Agentora health/version preflight; active Agentora orchestration and direct PhiOS, CompAware, and PhiMadaPrime integration remain future work.
 
 Research foundations: [Charter](docs/CHARTER.md), [Receipt contract](docs/RECEIPT_V1.md), [Roadmap](docs/ROADMAP.md).
 
