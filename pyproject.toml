@@ -19,6 +19,7 @@ phirsi-ecosystem = "phirsi.ecosystem_cli:main"
 phirsi-discovery = "phirsi.discovery_cli:main"
 phirsi-replication = "phirsi.replication_cli:main"
 phirsi-model-pair = "phirsi.model_pair_cli:main"
+phirsi-field = "phirsi.field_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
