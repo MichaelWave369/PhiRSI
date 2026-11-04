@@ -1,0 +1,45 @@
+name: R2 precommitted evaluation gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r2:
+    name: Two-split study and negative control
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Generate R2 plan (CI smoke only, not independently precommitted)
+        run: |
+          mkdir -p artifacts
+          python -m phirsi.study_cli plan --candidate sieve --max-n 3000 --cases 3 --rounds 2 --warmups 0 --output artifacts/r2-plan.json
+      - name: Run both splits and replay study evidence
+        run: |
+          python -m phirsi.study_cli run --plan artifacts/r2-plan.json --output artifacts/r2-study.json
+          python -m phirsi.study_cli verify artifacts/r2-study.json
+      - name: Negative-control study
+        run: |
+          python -m phirsi.study_cli plan --candidate trial --max-n 2000 --cases 3 --rounds 2 --warmups 0 --output artifacts/control-plan.json
+          python -m phirsi.study_cli run --plan artifacts/control-plan.json --output artifacts/control-study.json
+          python -m phirsi.study_cli verify artifacts/control-study.json
+          python -c "import json; from pathlib import Path; s=json.loads(Path('artifacts/control-study.json').read_text()); assert s['assessment']['status']=='negative_control'"
+      - name: Upload research evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: phirsi-r2-evidence
+          path: artifacts/
+          if-no-files-found: error
