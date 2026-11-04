@@ -1,0 +1,64 @@
+name: PhiRSI Live Lab site
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phirsi-pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: React unit tests and production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned direct frontend dependencies
+        working-directory: web
+        run: npm install --no-audit --no-fund
+      - name: Run deterministic browser-logic and evidence-inspector tests
+        working-directory: web
+        run: npm test
+      - name: Build GitHub Pages compatible site
+        working-directory: web
+        run: npm run build
+      - name: Verify built artifact and relative asset paths
+        shell: bash
+        run: |
+          test -s web/dist/index.html
+          test -d web/dist/assets
+          grep -q './assets/' web/dist/index.html
+          ! grep -q '/src/main.jsx' web/dist/index.html
+      - name: Upload Pages artifact after verified main build only
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+
+  deploy:
+    name: Publish React lab to GitHub Pages
+    needs: verify
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish verified build
+        id: deployment
+        uses: actions/deploy-pages@v4
