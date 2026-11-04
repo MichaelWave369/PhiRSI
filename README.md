@@ -51,9 +51,23 @@ The review returns **HELD**. Optional operator-authorized live execution require
 
 No benchmark gain, container-security proof, authenticated authorship, permission elevation, or deployment authority is claimed. The project is still a research harness, not a recursive self-improving AI.
 
+## Rung 4: local PhiServe inference measurements
+
+R4 adds a **read-only preflight and explicitly approved non-streaming inference benchmark** against an already-running PhiServe server on 127.0.0.1 (default port 11435). It does not download models, manage PhiServe, contact the internet or start inference on GitHub CI. The model must already be registered locally.
+
+    python -m phirsi.phiserve_cli doctor --model qwen3:4b
+    # Review the bounded experiment first; use your real registered model alias.
+    mkdir -p artifacts
+    python -m phirsi.phiserve_cli run --model qwen3:4b --approve-local-inference --output artifacts/r4.json
+    python -m phirsi.phiserve_cli verify artifacts/r4.json
+
+The three public, deterministic toy prompts produce only a **narrow exact-match fraction**, local end-to-end HTTP latency, and throughput calculated **only when the provider reports completion tokens**. No prompts, model text, or bearer credentials are saved; response hashes are recorded instead. **VRAM, power and TTFT are not measured**; no model-intelligence gain or independent replication is claimed.
+
+CI uses a fake loopback HTTP server, **not** a real PhiServe process or GGUF weights. For the operating protocol, local bearer-token guidance and exact limitations see [R4 Protocol](docs/R4_PROTOCOL.md).
+
 ## Φ369 ecosystem roadmap
 
-**Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. None of those integrations is active or required in R1, R2 or R3.
+**Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. A small opt-in PhiServe benchmark is now implemented in R4. Agentora, PhiOS, CompAware, and PhiMadaPrime integrations remain future work.
 
 Research foundations: [Charter](docs/CHARTER.md), [Receipt contract](docs/RECEIPT_V1.md), [Roadmap](docs/ROADMAP.md).
 

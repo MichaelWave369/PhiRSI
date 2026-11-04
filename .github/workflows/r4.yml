@@ -1,0 +1,32 @@
+name: R4 PhiServe protocol tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r4:
+    name: Fake loopback service, private evidence and negative tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Run all regression and fake PhiServe tests
+        run: python -m unittest discover -s tests -v
+      - name: Validate CLI help without any model access
+        run: |
+          python -m phirsi.phiserve_cli --help
+          python -m phirsi.phiserve_cli run --help
+      - name: Confirm no real local model is used
+        run: |
+          python -c "from pathlib import Path; p=Path('docs/R4_PROTOCOL.md').read_text(); assert 'fake PhiServe HTTP server' in p"
