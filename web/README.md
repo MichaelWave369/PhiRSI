@@ -17,11 +17,12 @@ All app code lives under web/src. This version has no cloud inference, analytics
 
 ## What actually works
 
-- Interactive R1–R7 milestone explorer. R1–R5 are recorded as merged, R6 source is available in this change, and R7 remains planned.
+- Interactive R1–R7 milestone explorer. R1–R6 are merged and R7 source is available in this change.
 - Browser-only prime-counting demonstration using a trial-division baseline, a sieve candidate and a separately written reference algorithm. Three inputs, 1–3 rounds, n at most 15,000. Results are local observations only, with no formal inference significance or AI model claims.
 - Negative control comparing the trial implementation to itself; a speed difference cannot count as an improvement.
 - Local-only R5 JSON handoff inspector. File contents remain in browser memory and are not uploaded or saved. The inspector checks a narrow schema shape and whether no-authority fields retain their intended values. **It does not verify source evidence, attest authorship, or validate cryptographic hashes.** Run PhiRSI's Python ecosystem_cli verifier with the original source for that.
-- Local-only R6 discovery ledger import and visualization, showing the reported negative control, candidate measurement and any evaluation as a chart. Browser review is **shape-only** and never authenticates timing, source identity, evidence hashes or correctness.
+- Local-only R6 discovery ledger import and visualization, showing the reported negative control, candidate measurement and any evaluation as a chart.
+- Local-only R7 summary JSON import, visualizing 2–6 runs, reported support counts, unsuccessful/budget-stopped runs and evaluation ratios. This is **shape-only** and does not authenticate original ZIP evidence, timing, source identity or true independent replication.
 - Direct links to the public GitHub documentation and related repos. No calls to local Agentora, PhiOS, or PhiServe are made from the web page.
 
 ## Publish on GitHub Pages
