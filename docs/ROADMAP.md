@@ -22,9 +22,9 @@ Explicitly authorized non-streaming inference against an existing loopback PhiSe
 
 Bind verified R1–R4 evidence to a compact, zero-authority handoff packet; add a real GET-only local Agentora health/version preflight and comprehensive negative tests. PhiOS ledger ingestion, Agentora dispatch, CompAware review and PhiMadaPrime display are **not yet implemented**, and will require separate contracts and operator permission.
 
-## R6: Bounded iterative discovery
+## R6: Bounded registered-candidate discovery (implemented in this PR)
 
-Explore candidate search under human-set budgets, immutable holdouts, independent acceptance criteria, rollback and explicit stop conditions. No self-granting authority or autonomous deployment.
+Run one mandatory same-algorithm control, screen a registered candidate on development inputs, optionally evaluate it **once** on separate seeded inputs, and write a versioned chained ledger of all observations and failures. Enforce declared candidate count, evaluation count, input bounds and soft wall-clock budget. This is an algorithm experiment, **not** AI-generated candidate search, secret/immutable holdout, hard OS sandbox or independent timing replication. No self-granting authority, model modification or autonomous deployment.
 
 ## R7: Open replication
 
@@ -35,4 +35,4 @@ Publish reproducible experiment packets, negative results, public evaluation pro
 
 ## Static Live Lab website (separate presentation milestone)
 
-The React/Vite site under web/ displays published rung summaries, runs a limited prime-count comparison entirely within the browser, and inspects the structure of local R5 advisory handoff JSON without uploading it. It **cannot** verify original receipt provenance, authorize actions, or claim model intelligence improvement. Public GitHub Pages deployment is gated on the frontend build and requires Pages settings and independent browser acceptance. This is separate from R6 iterative research.
+The React/Vite site under web/ displays published rung summaries, runs a limited prime-count comparison entirely within the browser, inspects local R5 advisory handoff JSON, and in R6 adds a local-only discovery ledger visualization without uploading JSON. It **cannot** verify original receipt provenance, authorize actions, or claim model intelligence improvement. Public GitHub Pages deployment is gated on the frontend build and requires Pages settings and independent browser acceptance. This is separate from R6 iterative research.
