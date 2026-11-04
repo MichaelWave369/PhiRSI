@@ -1,0 +1,44 @@
+name: R7 open comparison packets
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r7:
+    name: Pack, verify and export multi-run research evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PhiRSI
+        run: python -m pip install -e .
+      - name: Run full regression suite and R7 adversarial tests
+        run: python -m unittest discover -s tests -v
+      - name: Prepare and run two distinct-seed synthetic R6 studies
+        run: |
+          mkdir -p artifacts
+          python -m phirsi.discovery_cli plan --seed 369 --max-n 2000 --cases 3 --rounds 2 --output artifacts/plan-369.json
+          python -m phirsi.discovery_cli plan --seed 370 --max-n 2000 --cases 3 --rounds 2 --output artifacts/plan-370.json
+          python -m phirsi.discovery_cli run --plan artifacts/plan-369.json --approve-bounded-search --output artifacts/ledger-369.json
+          python -m phirsi.discovery_cli run --plan artifacts/plan-370.json --approve-bounded-search --output artifacts/ledger-370.json
+      - name: Package and independently replay source correctness (same CI runner)
+        run: |
+          python -m phirsi.replication_cli pack --ledger artifacts/ledger-369.json --ledger artifacts/ledger-370.json --output artifacts/r7-packet.zip
+          python -m phirsi.replication_cli verify artifacts/r7-packet.zip
+          python -m phirsi.replication_cli summary artifacts/r7-packet.zip --output artifacts/r7-summary.json
+          python -c "import json; from pathlib import Path; x=json.loads(Path('artifacts/r7-summary.json').read_text()); assert x['summary']['run_count']==2 and not x['policy']['automatic_promotion'] and not x['policy']['independent_hosts_authenticated']"
+      - name: Upload synthetic evidence, never a real external replication claim
+        uses: actions/upload-artifact@v4
+        with:
+          name: phirsi-r7-synthetic-comparison
+          path: artifacts/
+          if-no-files-found: error

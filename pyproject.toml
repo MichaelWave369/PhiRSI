@@ -17,6 +17,7 @@ phirsi = "phirsi.__main__:main"
 phirsi-phiserve = "phirsi.phiserve_cli:main"
 phirsi-ecosystem = "phirsi.ecosystem_cli:main"
 phirsi-discovery = "phirsi.discovery_cli:main"
+phirsi-replication = "phirsi.replication_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
