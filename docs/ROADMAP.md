@@ -1,14 +1,14 @@
 # ΦRSI development roadmap
 
-## R1: Evidence Foundation (current PR)
+## R1: Evidence Foundation (merged)
 
 Build a standard-library Python experiment runner with bounded built-in algorithms, deterministic case generation, separate reference, real measurements, JSON receipts, replay checks, unit tests and a CI smoke artifact.
 
 **Exit gate:** Python CI tests pass, real receipts validate, tampered results fail, and automatic promotion remains disabled.
 
-## R2: Stronger experiment protocol
+## R2: Precommitted two-split evaluation (current PR)
 
-Register hypotheses and acceptance criteria before experiments. Add statistically sensible sampling, multiple baseline implementations, immutable dataset splits, evaluator isolation and controlled negative cases.
+Register bounded hypotheses and acceptance criteria before experiments. Compare development and evaluation splits, reject an identical-algorithm negative control, retain both evidence receipts and replay conclusions. This is a documented split, not a secret or independently isolated holdout. Formal confidence intervals, multiple alternative baselines, authenticated preregistration and independent timing replication remain open research.
 
 ## R3: AI proposals in containment
 

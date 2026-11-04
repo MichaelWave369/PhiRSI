@@ -28,9 +28,21 @@ The run records timing samples in nanoseconds, median/p95 measurements, correctn
 - Local speedup is sensitive to CPU load and environment. Repetition and independent replication are required before drawing strong conclusions.
 - GitHub Actions unit tests and smoke benchmark are software checks, not external scientific verification.
 
+## Rung 2: precommitted two-split evaluation
+
+R2 adds a study-plan format, deterministic development/evaluation splits, explicit acceptance thresholds, a **same-algorithm negative control**, and a study verifier. The R1 CLI remains unchanged.
+
+    mkdir -p artifacts
+    python -m phirsi.study_cli plan --candidate sieve --hypothesis "Sieve improves prime counting over trial division" --output artifacts/plan.json
+    # Commit and timestamp the plan before reviewing any evaluation data.
+    python -m phirsi.study_cli run --plan artifacts/plan.json --output artifacts/study.json
+    python -m phirsi.study_cli verify artifacts/study.json
+
+Possible results: `observational_support`, `not_supported` or `negative_control`. **No result grants deployment authority.** The split is precommitted but not secret; the tool cannot authenticate when a plan was written or independently reproduce historical timing. See [R2 Protocol](docs/R2_PROTOCOL.md).
+
 ## Φ369 ecosystem roadmap
 
-**Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. None of those integrations is active or required in R1.
+**Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. None of those integrations is active or required in R1 or R2.
 
 Research foundations: [Charter](docs/CHARTER.md), [Receipt contract](docs/RECEIPT_V1.md), [Roadmap](docs/ROADMAP.md).
 
