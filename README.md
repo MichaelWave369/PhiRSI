@@ -134,6 +134,16 @@ Run those commands only on a computer where PhiServe is already serving the sele
 R8 reports descriptive timing and toy-task exact-match numbers but **never declares a general intelligence winner**. It does not attest model weights, independent timing, VRAM, TTFT or statistical significance. React's new Model A/B desk reads the exported summary locally and does not connect to PhiServe or verify historical model execution.
 
 See [R8 Protocol](docs/R8_PROTOCOL.md) for exact limits and real-hardware field steps.
+## Rung 9: expanded local model evaluation and separate hardware evidence
+
+R9 adds a 12-task, fixed public evaluation across two registered local PhiServe aliases, using alternate request order and explicitly approved loopback-only inference. It optionally fingerprints operator-selected local GGUF files and attaches **separate** PhiServe GPU process-memory observations. Neither fingerprint nor memory observation proves which model weights executed.
+
+    python -m phirsi.field_cli plan --model-a YOUR_FIRST_ALIAS --model-b YOUR_SECOND_ALIAS --output artifacts/r9-plan.json
+    python -m phirsi.field_cli run --plan artifacts/r9-plan.json --approve-local-inference --output artifacts/r9-receipt.json
+    python -m phirsi.field_cli verify artifacts/r9-receipt.json
+    python -m phirsi.field_cli summary artifacts/r9-receipt.json --output artifacts/r9-summary.json
+
+The React Live Lab Hardware desk accepts the exported summary locally, with no upload and no model API calls. CI uses fake model replies and synthetic GGUF files, not your hardware. All measurements remain descriptive, internally checkable and review-only. [Read the R9 protocol](docs/R9_PROTOCOL.md).
 ## Φ369 ecosystem roadmap
 
 **Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. R4 implements an opt-in PhiServe benchmark. R5 adds an offline governance handoff and a GET-only local Agentora health/version preflight; active Agentora orchestration and direct PhiOS, CompAware, and PhiMadaPrime integration remain future work.
