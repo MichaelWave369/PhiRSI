@@ -14,13 +14,13 @@ Register bounded hypotheses and acceptance criteria before experiments. Compare 
 
 Accept untrusted Python source as inert, fingerprinted proposal packets. Only a separate, explicit operator approval invokes a bounded local Docker container with no network, no secrets, read-only mounts and CPU/memory/process/time caps. Match guest-reported outputs against a host-side reference, but treat guest timings and execution provenance as unverified. R3 does not apply arbitrary Git patches or run Docker in CI. Stronger VM isolation and independent execution provenance remain future work.
 
-## R4: Optional local PhiServe interface (current PR)
+## R4: Optional local PhiServe interface (merged)
 
 Explicitly authorized non-streaming inference against an existing loopback PhiServe model; public three-task exact-match suite, end-to-end HTTP latency, optional provider-reported token throughput and receipt consistency checks. Real model weights are not run in CI. VRAM/power telemetry, streaming TTFT, robust quality tasks and independent replication remain future work. Distinguish system optimization from model capability improvement.
 
-## R5: Governed Φ ecosystem
+## R5: Governed review handoff (current PR)
 
-Use Agentora for research orchestration, PhiOS for policy and receipts, CompAware for adversarial controls and PhiMadaPrime for read-only observability. Each adapter must have its own tests and explicit permissions.
+Bind verified R1–R4 evidence to a compact, zero-authority handoff packet; add a real GET-only local Agentora health/version preflight and comprehensive negative tests. PhiOS ledger ingestion, Agentora dispatch, CompAware review and PhiMadaPrime display are **not yet implemented**, and will require separate contracts and operator permission.
 
 ## R6: Bounded iterative discovery
 
