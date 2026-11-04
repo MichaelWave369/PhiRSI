@@ -30,9 +30,12 @@ Run one mandatory same-algorithm control, screen a registered candidate on devel
 
 Create source-bound, reviewable ZIPs from 2–6 R6 ledgers with distinct seeds and identical protocol settings; replay existing validators, reject incompatible runs, retain negative/budget-stopped results, report descriptive statistics, and export local-only summaries to the React comparison desk. **No authenticated independent operators/hosts, statistical significance, model intelligence gain or deployment authority** are implied. True external replication remains future work.
 
-## R8: Controlled local model A/B (implemented in this PR)
+## R8: Controlled local model A/B (merged)
 
 Real, explicitly approved paired inference requests to an already-running loopback PhiServe server, comparing two registered aliases on the same three fixed public tasks. Alternate request order, preserve hashed-answer receipts, verify self-consistency offline and visualize a reduced summary in React. The CI fixture simulates PhiServe; it does not run actual weights. No independent model identity confirmation, hardware telemetry, general quality inference, automatic model selection or deployment authority is claimed.
+## R9: Expanded field evidence (current PR)
+
+Compare two already-registered PhiServe aliases on 12 fixed public tasks with bounded requests, optional SHA-256 hashes of operator-selected GGUF files, and optional imported PhiServe driver process-memory observations from **separate** field-run receipts. Export a review-only browser summary. No live CI inference, authenticated served-weight binding, simultaneous GPU telemetry, scientific confidence interval or automatic promotion is claimed.
 **Improve. Verify. Remember. Repeat.**
 
 
