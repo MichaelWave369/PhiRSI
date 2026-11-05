@@ -36,12 +36,15 @@ Real, explicitly approved paired inference requests to an already-running loopba
 ## R9: Expanded field evidence (merged)
 
 Compare two already-registered PhiServe aliases on 12 fixed public tasks with bounded requests, optional SHA-256 hashes of operator-selected GGUF files, and optional imported PhiServe driver process-memory observations from **separate** field-run receipts. Export a review-only browser summary. No live CI inference, authenticated served-weight binding, simultaneous GPU telemetry, scientific confidence interval or automatic promotion is claimed.
-## R10: Repeat-run workstation acceptance dossier (current PR)
+## R10: Repeat-run workstation acceptance dossier (merged)
 
 Validate and preserve three to six distinct-seed R9 field receipts with consistent task/configuration/source fingerprints; compare against preregistered simple exact-match and repeat-run latency-spread thresholds. Emit an offline review-only dossier and a local-only browser summary. **Does not itself perform inference, attest real hardware, verify cold/warm caches, bind served weights to GGUF hashes, or authorize model deployment.**
+## R11: Local first-vs-repeat isolation protocol (current PR)
+
+Predeclare a fixed four-block schedule comparing the initial request with immediate same-prompt repeated requests for two registered local PhiServe aliases. Alternate requested alias in blocks, vary which alias begins between separately approved runs, preserve hashed outputs and descriptive HTTP latency observations, and check source-bound receipts offline. **No confirmed backend reload, cold/warm-cache isolation, model weights identity, independent timing verification, or automatic deployment authority is implied.**
 **Improve. Verify. Remember. Repeat.**
 
 
 ## Static Live Lab website (separate presentation milestone)
 
-The React/Vite site under web/ displays published rung summaries, runs a limited prime-count comparison entirely within the browser, inspects local R5 advisory handoff JSON, adds R6 local-only discovery ledger visualization, in R7 adds a local-only multi-run comparison desk, in R8 adds a read-only PhiServe A/B results desk, in R9 adds local-only hardware evidence review, and in R10 adds repeat-run acceptance comparison. No imported JSON is uploaded. It **cannot** verify original receipt provenance, authorize actions, or claim model intelligence improvement. Public GitHub Pages deployment is gated on the frontend build and requires Pages settings and independent browser acceptance. This is separate from R6 iterative research.
+The React/Vite site under web/ displays published rung summaries, runs a limited prime-count comparison entirely within the browser, inspects local R5 advisory handoff JSON, adds R6 local-only discovery ledger visualization, in R7 adds a local-only multi-run comparison desk, in R8 adds a read-only PhiServe A/B results desk, in R9 adds local-only hardware evidence review, in R10 adds repeat-run acceptance comparison, and in R11 adds local-only blocked first-versus-repeat request review. No imported JSON is uploaded. It **cannot** verify original receipt provenance, authorize actions, or claim model intelligence improvement. Public GitHub Pages deployment is gated on the frontend build and requires Pages settings and independent browser acceptance. This is separate from R6 iterative research.

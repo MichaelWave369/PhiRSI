@@ -17,7 +17,7 @@ All app code lives under web/src. This version has no cloud inference, analytics
 
 ## What actually works
 
-- Interactive R1–R10 milestone explorer. R1–R9 are merged and R10 source is available in this change.
+- Interactive R1–R11 milestone explorer. R1–R10 are merged and R11 source is available in this change.
 - Browser-only prime-counting demonstration using a trial-division baseline, a sieve candidate and a separately written reference algorithm. Three inputs, 1–3 rounds, n at most 15,000. Results are local observations only, with no formal inference significance or AI model claims.
 - Negative control comparing the trial implementation to itself; a speed difference cannot count as an improvement.
 - Local-only R5 JSON handoff inspector. File contents remain in browser memory and are not uploaded or saved. The inspector checks a narrow schema shape and whether no-authority fields retain their intended values. **It does not verify source evidence, attest authorship, or validate cryptographic hashes.** Run PhiRSI's Python ecosystem_cli verifier with the original source for that.
@@ -26,6 +26,7 @@ All app code lives under web/src. This version has no cloud inference, analytics
 - Local-only R8 model-pair summary JSON preview, comparing registered aliases, public toy-task exact-match fractions and reported end-to-end latency. **The browser does not contact PhiServe, perform inference or independently authenticate the experiment.**
 - Local-only R9 expanded public-task and optional hardware-evidence summary: per-category exact match, GGUF hashes, and separate driver memory observations. This is only a shape preview and cannot authenticate the source or loaded model weights.
 - Local-only R10 workstation acceptance summary preview: all repeat-run accuracy and median HTTP observations, whether predeclared limits were reported as met, and explicit no-attestation warnings. The original R9 receipt bundle never enters the browser.
+- Local-only R11 first-vs-repeat model-request summary preview: per-block initial and repeated HTTP latencies, requested alias change flags, and explicitly unmeasured model-load time. It cannot verify real cold/warm state or source execution.
 - Direct links to the public GitHub documentation and related repos. No calls to local Agentora, PhiOS, or PhiServe are made from the web page.
 
 ## Publish on GitHub Pages
@@ -42,6 +43,6 @@ This URL is not evidence of a live website before the deploy job succeeds. The r
 
 ## Truth boundaries
 
-The page is a visualization of published milestones and an educational local experiment. It never auto-runs other code, evaluates arbitrary uploaded Python, writes a PhiOS ledger entry, issues GitHub merge calls or promotes models. Uploaded JSON is untrusted data and is rendered using React's normal text escaping. R1–R10 status labels reflect repository source and are not real-time CI/provider health indicators.
+The page is a visualization of published milestones and an educational local experiment. It never auto-runs other code, evaluates arbitrary uploaded Python, writes a PhiOS ledger entry, issues GitHub merge calls or promotes models. Uploaded JSON is untrusted data and is rendered using React's normal text escaping. R1–R11 status labels reflect repository source and are not real-time CI/provider health indicators.
 
 **Capability is not authority.**
