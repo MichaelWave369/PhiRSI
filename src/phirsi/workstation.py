@@ -14,7 +14,7 @@ from math import isfinite
 from statistics import median
 from typing import Any
 
-from .field_lab import CASE_HASH, _source_hash, validate_plan as validate_r9_plan, verify_field
+from .field_lab import CASES, CASE_HASH, _source_hash, validate_plan as validate_r9_plan, verify_field
 from .field_lab import make_plan as make_r9_plan
 from .lab import InvalidExperiment, bounded_int, digest
 
@@ -287,6 +287,7 @@ def browser_summary(dossier: Any) -> dict[str, Any]:
             "A": dossier["plan"]["model_a"],
             "B": dossier["plan"]["model_b"],
         },
+        "cases_per_model_per_run": len(CASES)*dossier["plan"]["rounds"],
         "thresholds": {
             "quality_floor": dossier["plan"]["quality_floor"],
             "max_repeat_median_latency_spread": dossier["plan"]["max_repeat_median_latency_spread"],
