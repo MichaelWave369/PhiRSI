@@ -1,0 +1,37 @@
+name: R11 PhiServe block isolation protocol
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r11:
+    name: Source-bound first/repeat request tests and CLI guardrails
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PhiRSI
+        run: python -m pip install -e .
+      - name: Compile Python sources
+        run: python -m compileall -q src/phirsi
+      - name: Run all R1-R11 regression and adversarial tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify only explicit local inference path is exposed
+        run: |
+          python -m phirsi.switch_cli --help
+          python -m phirsi.switch_cli plan --help
+          python -m phirsi.switch_cli run --help
+          python -m phirsi.switch_cli verify --help
+          python -m phirsi.switch_cli summary --help
+      - name: Assert no genuine cold-start attestation is claimed
+        run: |
+          python -c "from pathlib import Path; p=Path('docs/R11_PROTOCOL.md').read_text(); assert 'not an observed unload' in p and 'does not execute model weights' in p"
