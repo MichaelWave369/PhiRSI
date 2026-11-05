@@ -4,6 +4,7 @@ import ReplicationDesk from "./ReplicationDesk.jsx";
 import ModelPairDesk from "./ModelPairDesk.jsx";
 import FieldEvidenceDesk from "./FieldEvidenceDesk.jsx";
 import WorkstationDesk from "./WorkstationDesk.jsx";
+import SwitchIsolationDesk from "./SwitchIsolationDesk.jsx";
 import { RUNGS, runBrowserBenchmark, inspectHandoff } from "./lab.js";
 
 const REPO = "https://github.com/MichaelWave369/PhiRSI";
@@ -45,7 +46,7 @@ function RingVisual() {
       <span className="orbit-label orbit-label-a">OBSERVE</span>
       <span className="orbit-label orbit-label-b">VERIFY</span>
       <span className="orbit-label orbit-label-c">REVIEW</span>
-      <span className="orbit-corner top-left">LAB // R10</span>
+      <span className="orbit-corner top-left">LAB // R11</span>
       <span className="orbit-corner bottom-right">SIMULATION VISUAL</span>
     </div>
   );
@@ -351,6 +352,7 @@ export default function App() {
             <a href="#model-pair">MODEL A/B</a>
             <a href="#field-evidence">HARDWARE</a>
             <a href="#workstation">ACCEPTANCE</a>
+            <a href="#switch-isolation">ISOLATION</a>
           </nav>
           <a className="header-github" href={REPO} target="_blank" rel="noreferrer">
             GITHUB <Arrow />
@@ -373,7 +375,7 @@ export default function App() {
         </section>
         <div className="page-container">
           <div className="status-strip" aria-label="Research status summary">
-            <div><strong>10<span> / 10</span></strong><small>AVAILABLE RESEARCH RUNGS</small></div>
+            <div><strong>11<span> / 11</span></strong><small>AVAILABLE RESEARCH RUNGS</small></div>
             <div><strong>03</strong><small>FIXED BROWSER TEST CASES</small></div>
             <div><strong>00</strong><small>AUTOMATIC DEPLOYMENT GRANTS</small></div>
             <div className="strip-status"><span className="signal-dot"/> EXPERIMENTAL SOFTWARE <small>NOT AN AGI CLAIM</small></div>
@@ -391,6 +393,7 @@ export default function App() {
           <ModelPairDesk />
           <FieldEvidenceDesk />
           <WorkstationDesk />
+          <SwitchIsolationDesk />
           <section className="ecosystem section" id="ecosystem">
             <SectionHeader eyebrow="04 / THE CONNECTED ECOSYSTEM"
               title="Built to collaborate. Never to overreach."
