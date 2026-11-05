@@ -144,6 +144,19 @@ R9 adds a 12-task, fixed public evaluation across two registered local PhiServe 
     python -m phirsi.field_cli summary artifacts/r9-receipt.json --output artifacts/r9-summary.json
 
 The React Live Lab Hardware desk accepts the exported summary locally, with no upload and no model API calls. CI uses fake model replies and synthetic GGUF files, not your hardware. All measurements remain descriptive, internally checkable and review-only. [Read the R9 protocol](docs/R9_PROTOCOL.md).
+## Rung 10: repeat-run workstation acceptance dossier
+
+R10 packages **3–6 original R9 field receipts** into a single offline review dossier. A predeclared plan binds both model aliases, consecutive seeds, versioned public tasks, R9 source revision, toy-task accuracy floor and repeat-run latency spread limit. Each source receipt is rechecked by its original validator. Negative or unstable results are preserved, not dropped.
+
+    python -m phirsi.workstation_cli plan --model-a YOUR_FIRST_ALIAS --model-b YOUR_SECOND_ALIAS --run-count 3 --quality-floor 0.75 --max-repeat-median-latency-spread 2.0 --output artifacts/r10-plan.json
+    # Run the matching R9 plans with seeds 369, 370 and 371 locally and explicitly.
+    python -m phirsi.workstation_cli pack --plan artifacts/r10-plan.json --receipt artifacts/r9-run-369.json --receipt artifacts/r9-run-370.json --receipt artifacts/r9-run-371.json --output artifacts/r10-dossier.json
+    python -m phirsi.workstation_cli verify artifacts/r10-dossier.json
+    python -m phirsi.workstation_cli summary artifacts/r10-dossier.json --output artifacts/r10-summary.json
+
+R10 itself performs **no model inference or GPU access**. Its React Acceptance Desk reads only the reduced JSON summary locally. Meeting these toy-task thresholds does NOT authenticate machine identity, historical timings, model weights, cold/warm behavior or readiness to deploy. CI uses fake PhiServe replies, not real hardware.
+
+See [R10 Protocol](docs/R10_PROTOCOL.md) for the complete R9 operator commands, known confounds and permission boundaries.
 ## Φ369 ecosystem roadmap
 
 **Agentora** may later propose and orchestrate experiments. **PhiServe** may supply actual model-serving benchmarks. **PhiOS** will handle permission and verification boundaries. **CompAware** can contribute adversarial controls. **PhiMadaPrime** can visualize read-only results. R4 implements an opt-in PhiServe benchmark. R5 adds an offline governance handoff and a GET-only local Agentora health/version preflight; active Agentora orchestration and direct PhiOS, CompAware, and PhiMadaPrime integration remain future work.
