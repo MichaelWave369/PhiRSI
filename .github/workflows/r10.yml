@@ -1,0 +1,37 @@
+name: R10 local workstation acceptance dossier
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  r10:
+    name: Offline repeat-run dossier and forged evidence rejection
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PhiRSI
+        run: python -m pip install -e .
+      - name: Compile Python sources without executing model inference
+        run: python -m compileall -q src/phirsi
+      - name: Run R1-R10 Python tests including fake PhiServe fixtures
+        run: python -m unittest discover -s tests -v
+      - name: Verify new offline command surfaces
+        run: |
+          python -m phirsi.workstation_cli --help
+          python -m phirsi.workstation_cli plan --help
+          python -m phirsi.workstation_cli pack --help
+          python -m phirsi.workstation_cli verify --help
+          python -m phirsi.workstation_cli summary --help
+      - name: Prohibit false hardware attestation in protocol
+        run: |
+          python -c "from pathlib import Path; p=Path('docs/R10_PROTOCOL.md').read_text(); assert 'does not run inference' in p and 'mock local PhiServe' in p and 'not served-weight attestation' in p"
